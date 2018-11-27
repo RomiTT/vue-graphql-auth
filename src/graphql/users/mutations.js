@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 
-export async function deleteUser(apollo, email) {
+export function deleteUser(apollo, email) {
   const result = apollo.mutate({
     mutation: gql `mutation deleteUser($email: String!){
       deleteUser(email:$email)
@@ -13,7 +13,7 @@ export async function deleteUser(apollo, email) {
   return result
 }
 
-export async function signup(apollo, email, password, firstName, lastName) {
+export function signup(apollo, email, password, firstName, lastName) {
 
   const result = apollo.mutate({
     mutation: gql `mutation signup($email:String!, $password:String!, $firstName:String!, $lastName:String!) {
@@ -33,7 +33,7 @@ export async function signup(apollo, email, password, firstName, lastName) {
   return result
 }
 
-export async function login(apollo, email, password) {
+export function login(apollo, email, password) {
   const result = apollo.mutate({
     mutation: gql `mutation login($email:String!, $password:String!) {
       login(email:$email, password:$password) {
@@ -53,7 +53,7 @@ export async function login(apollo, email, password) {
   return result;
 }
 
-export async function logout(apollo) {
+export function logout(apollo) {
   const result = apollo.mutate({
     mutation: gql `mutation {
       logout

@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 
-export async function getTotalNumberOfUsers(apollo) {
+export function getTotalNumberOfUsers(apollo) {
   const result = apollo.query({
     query: gql `{
       totalNumberOfUsers
@@ -11,7 +11,7 @@ export async function getTotalNumberOfUsers(apollo) {
   return result
 }
 
-export async function takeUsers(apollo, offset, count) {
+export function takeUsers(apollo, offset, count) {
   const result = apollo.query({
     query: gql `query takeUsers($offset:Int!, $count:Int!) {
       takeUsers(offset:$offset, count:$count) {
