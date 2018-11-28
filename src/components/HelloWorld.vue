@@ -1,14 +1,14 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <div style="margin:5px"><button @click="signupTest()">Signup Test</button></div>
-    <div style="margin:5px"><button @click="loginTest()">Login Test</button></div>
-    <div style="margin:5px"><button @click="logoutTest()">Logout Test</button></div>
+    <div style="margin:5px"><v-btn color="info" @click="signupTest()">Signup Test</v-btn></div>
+    <div style="margin:5px"><v-btn color="info" @click="loginTest()">Login Test</v-btn></div>
+    <div style="margin:5px"><v-btn color="info" @click="logoutTest()">Logout Test</v-btn></div>
     
-    <div style="margin:5px"><button @click="getTotalNumberOfUsers()">Get total number of users</button></div>
-    <div style="margin:5px"><button @click="takeUsers(offset=0, count=10)">Take users</button></div>
-    <div style="margin:5px"><button @click="deleteUser(email='vue@email.com')">Delete user</button></div>
-    <div style="margin:5px"><button @click="subscribeOnAllEvents()">Subscribe all events</button></div>
+    <div style="margin:5px"><v-btn color="info" @click="getTotalNumberOfUsers()">Get total number of users</v-btn></div>
+    <div style="margin:5px"><v-btn color="info" @click="takeUsers(offset=0, count=10)">Take users</v-btn></div>
+    <div style="margin:5px"><v-btn color="info" @click="deleteUser(email='vue@email.com')">Delete user</v-btn></div>
+    <div style="margin:5px"><v-btn color="info" @click="subscribeOnAllEvents()">Subscribe all events</v-btn></div>
   </div>
 </template>
 
