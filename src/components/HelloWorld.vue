@@ -22,7 +22,10 @@ import { subscribeOnAllEvents } from '../graphql/users/subscriptions'
 export default {
   name: 'HelloWorld',
   props: {
-    msg: String
+    msg: {
+      type: String,
+      default: "Welcome to my application!"
+    }
   },
   data: function() {
     return {
