@@ -31,3 +31,16 @@ export function takeUsers(apollo, offset, count) {
 
   return result
 }
+
+export function validateToken(apollo, token) {
+  const result = apollo.query({
+    query: gql `query validateToken($token:String!) {
+      validateToken(token:$token)
+    }`,
+    variables: {
+      token: token
+    }
+  })
+
+  return result
+}

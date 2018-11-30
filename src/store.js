@@ -3,6 +3,18 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-export const store = new Vuex.Store({
-  
+export default new Vuex.Store({
+  state: {
+    loggined: false
+  },
+  getters: {
+    isLoggined: function(state) {
+      return state.loggined
+    }
+  },
+  mutations: {
+    changeLoginState: function(state, payload) {
+      state.loggined = payload.value
+    }
+  }
 })

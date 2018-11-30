@@ -9,15 +9,16 @@
     <div style="margin:5px"><v-btn color="info" @click="takeUsers(offset=0, count=10)">Take users</v-btn></div>
     <div style="margin:5px"><v-btn color="info" @click="deleteUser(email='vue@email.com')">Delete user</v-btn></div>
     <div style="margin:5px"><v-btn color="info" @click="subscribeOnAllEvents()">Subscribe all events</v-btn></div>
+    <div style="margin:5px"><v-btn color="info" @click="changeLoginState">Change state</v-btn></div>
   </div>
 </template>
 
 <script>
 import gql from 'graphql-tag'
 import { onLogin, onLogout } from '../vue-apollo'
-import { getTotalNumberOfUsers, takeUsers } from '../graphql/users/queries'
-import { signup, login, logout, deleteUser } from '../graphql/users/mutations'
-import { subscribeOnAllEvents } from '../graphql/users/subscriptions'
+import * as query from '../graphql/users/queries'
+import * as mutation from '../graphql/users/mutations'
+import * as subscription from '../graphql/users/subscriptions'
 
 export default {
   name: 'HelloWorld',
@@ -35,9 +36,12 @@ export default {
     }
   },
   methods: {
+    changeLoginState() {
+      this.$store.commit('changeLoginState', {value: !this.$store.getters.isLoggined})
+    },
     async getTotalNumberOfUsers() {
       try {
-        const result = await getTotalNumberOfUsers(this.$apollo)
+        const result = await query.getTotalNumberOfUsers(this.$apollo)
         console.log(result.data)  
       }
       catch (err) {
@@ -47,17 +51,17 @@ export default {
 
     async takeUsers(offset, count) {
       try {
-        const result = await takeUsers(this.$apollo, offset, count)
+        const result = await query.takeUsers(this.$apollo, offset, count)
         console.log(result.data)
       }
       catch (err) {
         console.log(err)
       }
     },
-
+    
     async deleteUser(email) {
       try {
-        const result = await deleteUser(this.$apollo, email)
+        const result = await mutation.deleteUser(this.$apollo, email)
         console.log(result.data)
       }
       catch (err) {
@@ -67,7 +71,7 @@ export default {
 
     async signupTest() {
       try {
-        const result = await signup(this.$apollo, "vue@email.com", "3333", "Apollo", "Vue")
+        const result = await mutation.signup(this.$apollo, "vue@email.com", "3333", "Apollo", "Vue")
         console.log(result.data)
       }
       catch (err) {
@@ -77,9 +81,10 @@ export default {
 
     async loginTest() {
       try {
-        const result = await login(this.$apollo, "bowgum.kim@gmail.com", "1111")
+        const result = await mutation.login(this.$apollo, "bowgum.kim@gmail.com", "1111")
         console.log(result.data)
         onLogin(this.$apollo.provider.defaultClient, result.data.login.token)
+        this.$store.commit('changeLoginState', {value: true})
       }
       catch (err) {
         console.log(err)
@@ -88,10 +93,11 @@ export default {
 
     async logoutTest() {
       try {
-        const result = await logout(this.$apollo)
+        const result = await mutation.logout(this.$apollo)
         console.log(result.data)       
         this.subscriptionOnAllEvents.unsubscribe()
         onLogout(this.$apollo.provider.defaultClient)
+        this.$store.commit('changeLoginState', {value: false})
       }
       catch (err) {
         console.log(err)
@@ -100,7 +106,7 @@ export default {
 
     subscribeOnAllEvents() {
       try {
-        const subscriber = subscribeOnAllEvents(this.$apollo)
+        const subscriber = subscription.subscribeOnAllEvents(this.$apollo)
         console.log( this.subscriptionOnAllEvents)
 
         this.subscriptionOnAllEvents= subscriber.subscribe(result => {

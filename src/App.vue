@@ -6,6 +6,7 @@
         <router-link to="/about">About</router-link>
       </div>
       <v-content>
+        <h2>Loggined: {{$store.getters.isLoggined}}</h2>
         <v-container fluid>
           <router-view/>
         </v-container>
@@ -13,6 +14,38 @@
     </div>
   </v-app>
 </template>
+
+<script>
+import { getAuthTokenName } from './vue-apollo'
+import { validateToken } from './graphql/users/queries'
+
+export default {
+  created: async function () {
+    if (typeof localStorage !== 'undefined') {
+      const token = localStorage.getItem(getAuthTokenName(), token)
+      if (token !== null) {
+        // validate token
+        try {
+          var result = await validateToken(this.$apollo, token)
+          this.$store.commit('changeLoginState', {value: result.data.validateToken})
+
+          if (result.data.validateToken === false) {
+            localStorage.removeItem(getAuthTokenName())
+          }
+        }
+        catch (err) {
+          this.$store.commit('changeLoginState', {value: false})
+          localStorage.removeItem(getAuthTokenName())
+        }      
+      }
+      else {
+        this.$store.commit('changeLoginState', {value: false})
+      }
+    }
+  }
+}
+
+</script>
 
 <style>
 #app {

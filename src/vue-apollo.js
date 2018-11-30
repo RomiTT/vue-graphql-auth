@@ -46,6 +46,10 @@ const defaultOptions = {
   // clientState: { resolvers: { ... }, defaults: { ... } }
 }
 
+export function getAuthTokenName() {
+  return AUTH_TOKEN
+}
+
 // Call this in the Vue app file
 export function createProvider (options = {}) {
   // Create apollo client
