@@ -27,7 +27,7 @@
 
       <v-container style="padding:0px;" fill-height fluid>
         <v-layout>
-          <v-flex md3 side-bar>
+          <v-flex md2 side-bar>
             <v-list dense>
               <v-list-tile to="/">
                 <v-list-tile-action>
