@@ -1,25 +1,40 @@
 <template>  
   <div id="app">
     <v-app>
-      <v-toolbar dark color="primary">
-        <v-toolbar-side-icon></v-toolbar-side-icon>
+      <v-navigation-drawer fixed v-model="drawer" app>
+        <v-list dense>
+          <v-list-tile to="/">
+            <v-list-tile-action>
+              <v-icon>home</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>Home</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-list-tile to="/about">
+            <v-list-tile-action>
+              <v-icon>info</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>About</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+      </v-navigation-drawer>
 
+      <v-toolbar dark color="primary" fixed app>
+        <v-toolbar-side-icon @click.stop="drawer = !drawer"><v-icon>menu</v-icon></v-toolbar-side-icon>
         <v-toolbar-title class="white--text">GraphQL Application</v-toolbar-title>
-
         <v-spacer></v-spacer>
-
         <v-btn icon>
           <v-icon>search</v-icon>
         </v-btn>
-
         <v-btn icon>
           <v-icon>apps</v-icon>
         </v-btn>
-
         <v-btn icon>
           <v-icon>refresh</v-icon>
         </v-btn>
-
         <v-btn icon>
           <v-icon>more_vert</v-icon>
         </v-btn>
@@ -27,26 +42,6 @@
 
       <v-container style="padding:0px;" fill-height fluid>
         <v-layout>
-          <v-flex md2 side-bar>
-            <v-list dense>
-              <v-list-tile to="/">
-                <v-list-tile-action>
-                  <v-icon>home</v-icon>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                  <v-list-tile-title>Home</v-list-tile-title>
-                </v-list-tile-content>
-              </v-list-tile>
-              <v-list-tile to="/about">
-                <v-list-tile-action>
-                  <v-icon>info</v-icon>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                  <v-list-tile-title>About</v-list-tile-title>
-                </v-list-tile-content>
-              </v-list-tile>
-            </v-list>
-          </v-flex>
           <v-flex main-content>
             <v-content>
               <h2>Loggined: {{$store.getters.isLoggined}}</h2>
@@ -66,8 +61,9 @@ import { getAuthTokenName } from './vue-apollo'
 import { validateToken } from './graphql/users/queries'
 
 export default {
-  data: function() {
+  data: () => {
     return {
+      drawer: null
     }
   },
 
