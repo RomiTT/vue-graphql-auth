@@ -4,7 +4,7 @@
       <v-toolbar dark color="primary">
         <v-toolbar-side-icon></v-toolbar-side-icon>
 
-        <v-toolbar-title class="white--text">Title</v-toolbar-title>
+        <v-toolbar-title class="white--text">GraphQL Application</v-toolbar-title>
 
         <v-spacer></v-spacer>
 
@@ -28,18 +28,24 @@
       <v-container style="padding:0px;" fill-height fluid>
         <v-layout>
           <v-flex md3 side-bar>
-            <div id="nav">
-              <v-card dark color="yellow">
-                <v-card-text>
-                  <router-link to="/">Home</router-link>
-                </v-card-text>                
-              </v-card>
-              <v-card dark color="red">
-                <v-card-text>
-                  <router-link to="/about">About</router-link>
-                </v-card-text>                
-              </v-card>
-            </div>
+            <v-list dense>
+              <v-list-tile to="/">
+                <v-list-tile-action>
+                  <v-icon>home</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                  <v-list-tile-title>Home</v-list-tile-title>
+                </v-list-tile-content>
+              </v-list-tile>
+              <v-list-tile to="/about">
+                <v-list-tile-action>
+                  <v-icon>info</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                  <v-list-tile-title>About</v-list-tile-title>
+                </v-list-tile-content>
+              </v-list-tile>
+            </v-list>
           </v-flex>
           <v-flex main-content>
             <v-content>
@@ -60,6 +66,18 @@ import { getAuthTokenName } from './vue-apollo'
 import { validateToken } from './graphql/users/queries'
 
 export default {
+  data: function() {
+    return {
+    }
+  },
+
+  computed: {
+
+  },
+
+  methods: {
+  },
+
   created: async function () {
     if (typeof localStorage !== 'undefined') {
       const token = localStorage.getItem(getAuthTokenName(), token)
@@ -93,6 +111,11 @@ export default {
 }
 .side-bar {
   background:silver;
+  padding-right:1px;
+}
+
+.active-side-bar-item {
+  background: gray;
 }
 
 .main-content {
