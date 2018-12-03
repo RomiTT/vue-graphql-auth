@@ -102,6 +102,14 @@ export default {
 </script>
 
 <style>
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+
 .content-root {
   padding:0px;
 }
@@ -120,26 +128,5 @@ export default {
 
 .item {
   margin:5px;
-}
-
-
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-  padding:5px;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
 }
 </style>
