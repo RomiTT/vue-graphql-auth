@@ -11,6 +11,7 @@
               <v-list-tile-title>Home</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
+
           <v-list-tile to="/about">
             <v-list-tile-action>
               <v-icon>info</v-icon>
@@ -19,6 +20,16 @@
               <v-list-tile-title>About</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
+
+          <v-list-tile to="/users">
+            <v-list-tile-action>
+              <v-icon>account_box</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>Users</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>         
+
         </v-list>
       </v-navigation-drawer>
 
@@ -58,7 +69,7 @@
 
 <script>
 import { getAuthTokenName } from './vue-apollo'
-import { validateToken } from './graphql/users/queries'
+import {validateToken} from './graphql/users/queries'
 
 export default {
   data: () => {
@@ -81,21 +92,21 @@ export default {
         // validate token
         try {
           var result = await validateToken(this.$apollo, token)
-          this.$store.commit('changeLoginState', {value: result.data.validateToken})
-
-          if (result.data.validateToken === false) {
+          console.log(result)
+          if (result.data.validateToken === true) {
+            this.$store.commit('loadUser')
+          } else {
+            this.$store.commit('clearUser')
             localStorage.removeItem(getAuthTokenName())
           }
-        }
-        catch (err) {
-          this.$store.commit('changeLoginState', {value: false})
+        } catch (err) {
+          this.$store.commit('clearUser')
           localStorage.removeItem(getAuthTokenName())
-        }      
-      }
-      else {
-        this.$store.commit('changeLoginState', {value: false})
+        }
       }
     }
+
+    this.$store.commit('initializeOK')
   }
 }
 

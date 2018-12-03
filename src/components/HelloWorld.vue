@@ -9,7 +9,6 @@
     <div style="margin:5px"><v-btn color="info" @click="takeUsers(offset=0, count=10)">Take users</v-btn></div>
     <div style="margin:5px"><v-btn color="info" @click="deleteUser(email='vue@email.com')">Delete user</v-btn></div>
     <div style="margin:5px"><v-btn color="info" @click="subscribeOnAllEvents()">Subscribe all events</v-btn></div>
-    <div style="margin:5px"><v-btn color="info" @click="changeLoginState">Change state</v-btn></div>
   </div>
 </template>
 
@@ -36,9 +35,6 @@ export default {
     }
   },
   methods: {
-    changeLoginState() {
-      this.$store.commit('changeLoginState', {value: !this.$store.getters.isLoggined})
-    },
     async getTotalNumberOfUsers() {
       try {
         const result = await query.getTotalNumberOfUsers(this.$apollo)
@@ -80,42 +76,18 @@ export default {
     },
 
     async loginTest() {
-      try {
-        const result = await mutation.login(this.$apollo, "bowgum.kim@gmail.com", "1111")
-        console.log(result.data)
-        onLogin(this.$apollo.provider.defaultClient, result.data.login.token)
-        this.$store.commit('changeLoginState', {value: true})
-      }
-      catch (err) {
-        console.log(err)
-      }
+      //this.$store.dispatch('login', {apollo:this.$apollo, email:"bowgum.kim@gmail.com", password:"1111"})
+      this.$store.dispatch('login', {apollo:this.$apollo, email:"vue@email.com", password:"3333"})
     },
 
     async logoutTest() {
-      try {
-        const result = await mutation.logout(this.$apollo)
-        console.log(result.data)       
-        this.subscriptionOnAllEvents.unsubscribe()
-        onLogout(this.$apollo.provider.defaultClient)
-        this.$store.commit('changeLoginState', {value: false})
-      }
-      catch (err) {
-        console.log(err)
-      }
+      this.$store.dispatch('logout', {apollo:this.$apollo})
     },
 
     subscribeOnAllEvents() {
-      try {
-        const subscriber = subscription.subscribeOnAllEvents(this.$apollo)
-        console.log( this.subscriptionOnAllEvents)
-
-        this.subscriptionOnAllEvents= subscriber.subscribe(result => {
-          console.log(`onAllEvents: ${result.data.subscribeOnAllEvents.eventName}`)
-        })
-      }
-      catch (err) {
-        console.log(err)
-      }
+      this.$store.dispatch('subscribeOnAll', {apollo:this.$apollo, callback: (result) => {
+        console.log(result.data.subscribeOnAllEvents)
+      }})
     }
   }
 }
