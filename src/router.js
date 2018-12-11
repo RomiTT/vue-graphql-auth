@@ -5,6 +5,7 @@ import store from './store'
 Vue.use(Router)
 
 const router = new Router({
+  mode: 'hash',
   routes: [{
         path: '/',
         name: 'home',
